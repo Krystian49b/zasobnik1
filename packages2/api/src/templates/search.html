@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Search</title>
+        <style>
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f5f5f5;
+            }
+            .search-container {
+                background: white;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                color: #333;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .search-form {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 30px;
+            }
+            .search-input {
+                flex: 1;
+                padding: 12px;
+                border: 2px solid #ddd;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+            .search-input:focus {
+                outline: none;
+                border-color: #007bff;
+            }
+            .search-button {
+                padding: 12px 24px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            .search-button:hover {
+                background-color: #0056b3;
+            }
+            .results {
+                margin-top: 20px;
+            }
+            .result-item {
+                background: #f8f9fa;
+                padding: 15px;
+                margin-bottom: 10px;
+                border-radius: 4px;
+                border-left: 4px solid #007bff;
+            }
+            .result-title {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 5px;
+            }
+            .result-description {
+                color: #666;
+                line-height: 1.4;
+            }
+            .no-results {
+                text-align: center;
+                color: #666;
+                font-style: italic;
+                padding: 20px;
+            }
+            .search-stats {
+                color: #666;
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="search-container">
+            <h1>Search</h1>
+
+            <form class="search-form" method="GET" action="/search">
+                <input
+                    type="text"
+                    name="q"
+                    class="search-input"
+                    placeholder="Enter your search query..."
+                    value="{{ query or '' }}"
+                    required
+                />
+                <button type="submit" class="search-button">Search</button>
+            </form>
+
+            {% if query %}
+            <div class="search-stats">
+                {% if results %} Found {{ results|length }} result{{ 's' if
+                results|length != 1 else '' }} for "{{ query }}" {% else %} No
+                results found for "{{ query }}" {% endif %}
+            </div>
+
+            <div class="results">
+                {% if results %} {% for result in results %}
+                <div class="result-item">
+                    <div class="result-title">{{ result.title }}</div>
+                    <div class="result-description">
+                        {{ result.description }}
+                    </div>
+                </div>
+                {% endfor %} {% else %}
+                <div class="no-results">
+                    No results found. Try different keywords or check your
+                    spelling.
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </body>
+</html>
