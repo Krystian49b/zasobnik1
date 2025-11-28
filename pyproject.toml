@@ -1,0 +1,27 @@
+[project]
+name = "zasobnik"
+version = "0.1.0"
+description = "Super system"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "common",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0",
+    "ruff>=0.12",
+]
+
+[tool.uv.sources]
+common = { workspace = true }
+api = { workspace = true }
+
+[tool.uv.workspace]
+members = [
+    "packages/common",
+    "packages/processing",
+    "packages/ml",
+    "packages/api",
+]
